@@ -1,0 +1,8 @@
+Project 2: Similarity Metrics
+
+In this project we use Euclidean distance and Pearson correlation to create a numerical
+representation of dissimilarity. We then use these numbers with sets of movie ratings, links, etc
+in order to provide a recommendation to a user based on his own preferences.
+
+The approach comes from the notion of "collaborative filtering," first coined by David Goldberg at XEROX PARC in 1992 in a paper called "Using collaborative filtering to weave an information tapestry." He designed a system called Tapestry that allowed people to annotate documents as either interesting or uninteresting and used this information to filter documents for other people. (Segaran 8)
+
