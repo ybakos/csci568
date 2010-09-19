@@ -72,3 +72,37 @@ def similar_critics(preferences, person, number_of_results = 5, similarity_funct
   scores.sort()
   scores.reverse()
   return scores[0:number_of_results]
+
+def get_recommendations(preferences, person, similarity_function = pearson_correlation):
+  totals = {}
+  simSums = {}
+  for other in preferences:
+    # don't compare me to myself
+    if other == person: continue
+    sim = similarity_function(preferences, person, other)
+    #ignore scores of zero or lower
+    if sim <= 0: continue
+    for item in preferences[other]:
+      # only score movies I haven't seen yet
+      if item not in preferences[person] or preferences[person][item] == 0:
+        # similarity * score
+        totals.setdefault(item, 0)
+        totals[item] += preferences[other][item] * sim
+        # sum of similarities
+        simSums.setdefault(item, 0)
+        simSums[item] += sim
+  # Create the normalized list
+  rankings = [(total / simSums[item], item) for item, total in totals.items()]
+  # Return the sorted list
+  rankings.sort()
+  rankings.reverse()
+  return rankings
+
+def transform_preferences(preferences):
+  result = {}
+  for person in preferences:
+    for item in preferences[person]:
+      result.setdefault(item, {})
+      # Flip item and person
+      result[item][person] = preferences[person][item]
+  return result
